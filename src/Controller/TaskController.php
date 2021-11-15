@@ -22,12 +22,12 @@ class TaskController extends AbstractController
         $tasks = $repository->findAll();
         //  Affichage des données dans le var-dumper
 
-        dd($tasks);
+        // dd($tasks);
 
 
 
         return $this->render('task/index.html.twig', [
-            'controller_name' => 'TaskController',
+            'tasks' => $tasks,
         ]);
     }
 }
