@@ -10,6 +10,9 @@
 
 {% block body %}
 	<div class="container">
+
+		<a href="{{ path('task_create') }}" class="btn btn-dark">Ajouter de façon ténébreuse</a>
+
 		<table class="table table-striped tabled-border" id="tasksTable">
 			<thead>
 				<th>Id</th>
@@ -27,6 +30,13 @@
 							<td>{{ task.description }}</td>
 							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.tag.name }}</td>
+							<td>
+								<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-success">Modifier</a>
+							</td>
+							<td>
+								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-danger">Supprimer</a>
+							</td>
+							<td></td>
 						</tr>
 					{% endfor %}
 				{% endif %}
