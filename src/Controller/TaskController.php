@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Task;
 use App\Entity\Tasks;
 use App\Form\TaskType;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +63,33 @@ class TaskController extends AbstractController
 
             return $this->redirectToRoute('task_listing');
         }
+        return $this->render('task/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 
+    /**
+     * 
+     * @Route("/task/update/{id}", name="task_update", requirements={"id"="\d+"})
+     */
+    public function updateTask(int $id, Request $request): Response
+    {
+
+        //  Récupération d'un objet Tasks
+        $task = $this->getDoctrine()->getRepository(Tasks::class)->find($id);
+
+        // OU 
+        // $task = $this->getDoctrine()->getRepository(Tasks::class)->findOneBy(['id' => $id]);
+
+        $form = $this->createForm(TaskType::class, $task, []);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($task);
+            $manager->flush();
+            return $this->redirectToRoute('task_listing');
+        }
         return $this->render('task/create.html.twig', [
             'form' => $form->createView()
         ]);
