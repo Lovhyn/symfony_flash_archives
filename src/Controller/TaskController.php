@@ -67,7 +67,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //  Facultatif car déjà fait automatiquement
+            //  Facultatif car se fait automatiquement
             /* 
             $task->setName($form['name']->getData())
                 ->setDescription($form['description']->getData())
@@ -84,5 +84,18 @@ class TaskController extends AbstractController
         return $this->render('task/create.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/task/delete/{id}", name="task_delete", requirements={"id"="\d+"})
+     * @return Response
+     */
+    public function deleteTask(Tasks $task): Response
+    {
+        $this->manager->remove($task);
+        $this->manager->flush();
+
+        return $this->redirectToRoute("task_listing");
     }
 }
