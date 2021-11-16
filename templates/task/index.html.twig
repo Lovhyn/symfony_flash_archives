@@ -16,6 +16,7 @@
 				<th>Nom</th>
 				<th>Description</th>
 				<th>Date effective</th>
+				<th>Catégorie</th>
 			</thead>
 			<tbody>
 				{% if tasks is defined %}
@@ -25,6 +26,7 @@
 							<td>{{ task.name }}</td>
 							<td>{{ task.description }}</td>
 							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
+							<td>{{ task.tag.name }}</td>
 						</tr>
 					{% endfor %}
 				{% endif %}
