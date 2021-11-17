@@ -38,6 +38,10 @@ class TaskController extends AbstractController
     public function index(): Response
     {
 
+        //  Récupérer les infos de l'utilisateur connecté
+        $user = $this->getUser();
+
+
         //  On va chercher avec doctrine le repository de nos tâches
         //  $repository = $this->getDoctrine()->getRepository(Tasks::class);
         //  Danc ce repository, nous récupérons toutes les entrées
@@ -67,6 +71,11 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $this->addFlash(
+                'text-primary',
+                'La modification s\'est bien effectuée !'
+            );
+
             //  Facultatif car se fait automatiquement
             /* 
             $task->setName($form['name']->getData())
@@ -95,6 +104,11 @@ class TaskController extends AbstractController
     {
         $this->manager->remove($task);
         $this->manager->flush();
+
+        $this->addFlash(
+            'text-warning',
+            'La suppression s\'est bien effectuée !'
+        );
 
         return $this->redirectToRoute("task_listing");
     }

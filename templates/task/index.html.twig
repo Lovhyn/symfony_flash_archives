@@ -11,7 +11,18 @@
 {% block body %}
 	<div class="container">
 
-		<a href="{{ path('task_create') }}" class="btn btn-info">Ajouter paisiblement</a>
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="d-flex justify-content-center">
+					<p class="fw-bold {{ label }}">
+						{{ message }}
+					</p>
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+
+		<a href="{{ path('task_create') }}" class="btn btn-info">Ajouter</a>
 
 		<table class="table table-striped tabled-border" id="tasksTable">
 			<thead>
