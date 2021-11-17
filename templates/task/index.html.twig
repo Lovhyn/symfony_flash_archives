@@ -11,7 +11,7 @@
 {% block body %}
 	<div class="container">
 
-		<a href="{{ path('task_create') }}" class="btn btn-dark">Ajouter de façon ténébreuse</a>
+		<a href="{{ path('task_create') }}" class="btn btn-info">Ajouter paisiblement</a>
 
 		<table class="table table-striped tabled-border" id="tasksTable">
 			<thead>
@@ -31,10 +31,10 @@
 							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.tag.name }}</td>
 							<td>
-								<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-success">Modifier</a>
+								<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-primary">Modifier</a>
 							</td>
 							<td>
-								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-danger">Supprimer</a>
+								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">Supprimer</a>
 							</td>
 							<td></td>
 						</tr>
