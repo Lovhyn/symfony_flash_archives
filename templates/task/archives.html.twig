@@ -5,18 +5,12 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
 {% endblock %}
 
-{% block title %}Liste des tâches
+{% block title %}Liste des tâches archivées
 {% endblock %}
 
 {% block body %}
 	<div class="container">
-
-		<div class="d-flex justify-content-around">
-			<a href="{{ path('task_create') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">Ajouter une nouvelle tâche</a>
-			<a href="{{ path('task_archives') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">Accéder aux archives</a>
-		</div>
-
-		<h1 class="d-flex justify-content-center mb-2">Liste des tâches</h1>
+		<h1 class="d-flex justify-content-center mb-5">Liste des tâches archivées</h1>
 
 		{% for label, messages in app.flashes %}
 			{% for message in messages %}
@@ -28,6 +22,7 @@
 			{% endfor %}
 		{% endfor %}
 
+
 		<table class="table table-striped tabled-border" id="tasksTable">
 			<thead>
 				<th>Id</th>
@@ -35,8 +30,6 @@
 				<th>Description</th>
 				<th>Date effective</th>
 				<th>Catégorie</th>
-				<th></th>
-				<th></th>
 				<th></th>
 			</thead>
 			<tbody>
@@ -46,22 +39,19 @@
 							<th scope="row">{{ task.id }}</th>
 							<td>{{ task.name }}</td>
 							<td>{{ task.description }}</td>
-							<td>{{ task.dueAt | date('d/m/Y') }}</td>
+							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.tag.name }}</td>
 							<td>
-								<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-primary">Modifier</a>
-							</td>
-							<td>
 								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">Supprimer</a>
-							</td>
-							<td>
-								<a href="{{ path('task_archive', {'id': task.id}) }}" class=" btn btn-info">Archiver</a>
 							</td>
 						</tr>
 					{% endfor %}
 				{% endif %}
 			</tbody>
 		</table>
+		<div>
+			<a href="{{ path('task_listing') }}" class=" btn btn-dark m-5">Retour</a>
+		</div>
 	</div>
 {% endblock %}
 
@@ -69,22 +59,10 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js" type="text/javascript"></script>
-
 
 	<script>
 		$(document).ready(function () {
-$('#tasksTable').DataTable({
-"order": [
-[3, "asc"]
-],
-"columnDefs": [
-{
-"targets": 3,
-"type": "date-eu"
-}
-]
-});
+$('#tasksTable').DataTable();
 });
 	</script>
 {% endblock %}

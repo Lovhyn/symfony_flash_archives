@@ -52,7 +52,9 @@ class AppFixtures extends Fixture
                 ->setDescription($faker->paragraph(3))
                 ->setCreatedAt(new \DateTime())
                 ->setDueAt($faker->dateTimeBetween('now', '6 months'))
-                ->setTag($faker->randomElement($tags));
+                ->setTag($faker->randomElement($tags))
+                ->setIsArchived(0)
+                ->setIsImportant(0);
             //  On fait persister les données
             $manager->persist($task);
         }

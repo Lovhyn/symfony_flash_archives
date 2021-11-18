@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Archives;
 use App\Entity\Tasks;
 use App\Form\TaskType;
 use App\Repository\TasksRepository;
@@ -45,12 +46,31 @@ class TaskController extends AbstractController
         //  On va chercher avec doctrine le repository de nos tâches
         //  $repository = $this->getDoctrine()->getRepository(Tasks::class);
         //  Danc ce repository, nous récupérons toutes les entrées
-        $tasks = $this->repository->findAll();
+        $tasks = $this->repository->findBy(array('isArchived' => '0'));
         //  Affichage des données dans le var-dumper
 
-        // dd($tasks);
-
         return $this->render('task/index.html.twig', [
+            'tasks' => $tasks,
+        ]);
+    }
+
+    /**
+     * @Route("/task/archives", name="task_archives")
+     */
+    public function indexArchives(): Response
+    {
+
+        //  Récupérer les infos de l'utilisateur connecté
+        $user = $this->getUser();
+
+
+        //  On va chercher avec doctrine le repository de nos tâches
+        //  $repository = $this->getDoctrine()->getRepository(Tasks::class);
+        //  Danc ce repository, nous récupérons toutes les entrées
+        $tasks = $this->repository->findBy(array('isArchived' => '1'));
+        //  Affichage des données dans le var-dumper
+
+        return $this->render('task/archives.html.twig', [
             'tasks' => $tasks,
         ]);
     }
@@ -111,5 +131,42 @@ class TaskController extends AbstractController
         );
 
         return $this->redirectToRoute("task_listing");
+    }
+
+    /**
+     * @Route("/task/archive/{id}", name="task_archive", requirements={"id"="\d+"})
+     * @return Response
+     */
+    public function archiveTask(Tasks $task): Response
+    {
+        if ($this->checkDueAt($task)) {
+            $task->setIsArchived(1);
+            $this->manager->persist($task);
+            $this->manager->flush();
+            $this->addFlash(
+                'text-success',
+                'La tâche a bien été archivée !'
+            );
+        } else {
+            $this->addFlash(
+                'text-warning',
+                'Impossible d\'archiver une tâche dont l\'échéance n\'a pas eu lieu'
+            );
+        }
+
+        return $this->redirectToRoute("task_listing");
+    }
+
+    //  Vérifie si la date effective de la tâche est passée ou non.
+    public function checkDueAt(Tasks $task)
+    {
+        $flag = false;
+        $dueAt = $task->getDueAt();
+        $today = new \DateTime();
+
+        if ($today > $dueAt) {
+            $flag = true;
+        }
+        return $flag;
     }
 }

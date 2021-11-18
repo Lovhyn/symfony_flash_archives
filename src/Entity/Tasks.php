@@ -55,6 +55,19 @@ class Tasks
      */
     private $tag;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isArchived;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isImportant;
+
+
+    // *********************************************************** GETTERS & SETTERS ***************************************************************    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,5 +133,27 @@ class Tasks
         return $this;
     }
 
+    public function getIsArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
 
+    public function setIsArchived(bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    public function getIsImportant(): ?bool
+    {
+        return $this->isImportant;
+    }
+
+    public function setIsImportant(bool $isImportant): self
+    {
+        $this->isImportant = $isImportant;
+
+        return $this;
+    }
 }
