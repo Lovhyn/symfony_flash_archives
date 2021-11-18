@@ -21,14 +21,25 @@
 		{% for label, messages in app.flashes %}
 			{% for message in messages %}
 				<div class="d-flex justify-content-center">
-					<p class="fw-bold {{ label }}">
+					<p class="fw-bold text-{{ label }}">
 						{{ message }}
 					</p>
 				</div>
 			{% endfor %}
 		{% endfor %}
 
+		<form action="" method="">
+			<div class="d-flex justify-content-end mb-3">
+				<select name="archives" id="selectedValues">
+					<option value="" selected>Type d'archivage</option>
+					<option value="auto">Auto</option>
+					<option value="manuel">Manuel</option>
+				</select>
+			</div>
+		</form>
+
 		<table class="table table-striped tabled-border" id="tasksTable">
+
 			<thead>
 				<th>Id</th>
 				<th>Nom</th>
@@ -54,9 +65,11 @@
 							<td>
 								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">Supprimer</a>
 							</td>
+
 							<td>
 								<a href="{{ path('task_archive', {'id': task.id}) }}" class=" btn btn-info">Archiver</a>
 							</td>
+
 						</tr>
 					{% endfor %}
 				{% endif %}
@@ -64,7 +77,6 @@
 		</table>
 	</div>
 {% endblock %}
-
 {% block javascripts %}
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 

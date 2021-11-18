@@ -126,7 +126,7 @@ class TaskController extends AbstractController
         $this->manager->flush();
 
         $this->addFlash(
-            'text-warning',
+            'warning',
             'La suppression s\'est bien effectuée !'
         );
 
@@ -144,12 +144,12 @@ class TaskController extends AbstractController
             $this->manager->persist($task);
             $this->manager->flush();
             $this->addFlash(
-                'text-success',
+                'success',
                 'La tâche a bien été archivée !'
             );
         } else {
             $this->addFlash(
-                'text-warning',
+                'warning',
                 'Impossible d\'archiver une tâche dont l\'échéance n\'a pas eu lieu'
             );
         }

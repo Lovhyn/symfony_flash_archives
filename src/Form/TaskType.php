@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Tag;
 use App\Entity\Tasks;
+use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\ORM\EntityRepository;
+use PhpParser\Node\Expr\Cast\Bool_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

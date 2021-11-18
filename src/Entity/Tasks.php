@@ -65,6 +65,19 @@ class Tasks
      */
     private $isImportant;
 
+    public function __construct(
+        String $name = "",
+        String $description = "",
+        String $tag = null,
+        Bool $isArchived = false,
+        Bool $isImportant = false
+    ) {
+        $this->setName($name);
+        $this->setDescription($description);
+        $this->setTag($tag);
+        $this->setIsArchived($isArchived);
+        $this->setIsImportant($isImportant);
+    }
 
     // *********************************************************** GETTERS & SETTERS ***************************************************************    
 
