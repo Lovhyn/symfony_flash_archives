@@ -1,0 +1,41 @@
+<table class="table table-striped tabled-border" id="tasksTable">
+
+	<thead>
+		<th>Id</th>
+		<th>Nom</th>
+		<th>Description</th>
+		<th>Date effective</th>
+		<th>Catégorie</th>
+		<th></th>
+		<th></th>
+		{% if slug == 'manual' %}
+			<th></th>
+		{% endif %}
+	</thead>
+	<tbody>
+		{% if tasks is defined %}
+			{% for task in tasks %}
+				<tr>
+					<th scope="row">{{ task.id }}</th>
+					<td>{{ task.name }}</td>
+					<td>{{ task.description }}</td>
+					<td>{{ task.dueAt | date('d/m/Y') }}</td>
+					<td>{{ task.tag.name }}</td>
+					<td>
+						<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-primary">Modifier</a>
+					</td>
+					<td>
+						<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">Supprimer</a>
+					</td>
+
+					{% if slug == 'manual' %}
+						<td>
+							<a href="{{ path('task_archive', {'id': task.id}) }}" class=" btn btn-info">Archiver</a>
+						</td>
+					{% endif %}
+
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</tbody>
+</table>

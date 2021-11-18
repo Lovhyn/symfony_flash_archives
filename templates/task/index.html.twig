@@ -30,51 +30,16 @@
 
 		<form action="" method="">
 			<div class="d-flex justify-content-end mb-3">
-				<select name="archives" id="selectedValues">
-					<option value="" selected>Type d'archivage</option>
-					<option value="auto">Auto</option>
-					<option value="manuel">Manuel</option>
+				<select name="archives" id="selectedValues" onchange='location = this.value;'>
+					<option value="archives_auto" selected>Type d'archivage</option>
+					<option value="archives_auto">Auto</option>
+					<option value="archives_manual">Manuel</option>
 				</select>
 			</div>
 		</form>
 
-		<table class="table table-striped tabled-border" id="tasksTable">
+		{% include "task/task_listing.html.twig" %}
 
-			<thead>
-				<th>Id</th>
-				<th>Nom</th>
-				<th>Description</th>
-				<th>Date effective</th>
-				<th>Catégorie</th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</thead>
-			<tbody>
-				{% if tasks is defined %}
-					{% for task in tasks %}
-						<tr>
-							<th scope="row">{{ task.id }}</th>
-							<td>{{ task.name }}</td>
-							<td>{{ task.description }}</td>
-							<td>{{ task.dueAt | date('d/m/Y') }}</td>
-							<td>{{ task.tag.name }}</td>
-							<td>
-								<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-primary">Modifier</a>
-							</td>
-							<td>
-								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">Supprimer</a>
-							</td>
-
-							<td>
-								<a href="{{ path('task_archive', {'id': task.id}) }}" class=" btn btn-info">Archiver</a>
-							</td>
-
-						</tr>
-					{% endfor %}
-				{% endif %}
-			</tbody>
-		</table>
 	</div>
 {% endblock %}
 {% block javascripts %}

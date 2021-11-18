@@ -8,6 +8,8 @@ use App\Form\TaskType;
 use App\Repository\TasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use JetBrains\PhpStorm\NoReturn;
+use PhpParser\Node\Stmt\Nop;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +38,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/task/listing", name="task_listing")
      */
-    public function index(): Response
+    public function index(String $slug = 'auto'): Response
     {
 
         //  Récupérer les infos de l'utilisateur connecté
@@ -51,6 +53,7 @@ class TaskController extends AbstractController
 
         return $this->render('task/index.html.twig', [
             'tasks' => $tasks,
+            'slug' => $slug,
         ]);
     }
 
@@ -168,5 +171,22 @@ class TaskController extends AbstractController
             $flag = true;
         }
         return $flag;
+    }
+
+    /**
+     * @Route("/task/archives_{slug}") 
+     */
+    public function displayTable(String $slug)
+    {
+        if ($slug != 'manual') {
+            $tasks = $this->repository->findAll();
+            for ($i = 0; $i < count($tasks); $i++) {
+                if ($this->checkDueAt($tasks[$i])) {
+                    $this->archiveTask($tasks[$i]);
+                }
+            }
+        }
+
+        return $this->index($slug);
     }
 }
