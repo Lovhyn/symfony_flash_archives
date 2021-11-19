@@ -12,11 +12,11 @@
 	<div class="container">
 
 		<div class="d-flex justify-content-around">
-			<a href="{{ path('task_create') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">Ajouter une nouvelle tâche</a>
-			<a href="{{ path('task_archives') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">Accéder aux archives</a>
+			<a href="{{ path('task_create') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">{{ 'general.button.add_task' | trans }}</a>
+			<a href="{{ path('task_archives') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">{{ 'general.button.go_to_archive' | trans }}</a>
 		</div>
 
-		<h1 class="d-flex justify-content-center mb-2">Liste des tâches</h1>
+		<h1 class="d-flex justify-content-center mb-2">{{ 'general.title_list_task' | trans }}</h1>
 
 		{% for label, messages in app.flashes %}
 			{% for message in messages %}
@@ -28,15 +28,13 @@
 			{% endfor %}
 		{% endfor %}
 
-		<form action="" method="">
-			<div class="d-flex justify-content-end mb-3">
-				<select name="archives" id="selectedValues" onchange='location = this.value;'>
-					<option value="archives_auto" selected>Type d'archivage</option>
-					<option value="archives_auto">Auto</option>
-					<option value="archives_manual">Manuel</option>
-				</select>
-			</div>
-		</form>
+		<div class="d-flex justify-content-end mb-3">
+			<select name="archives" id="selectedValues" onchange='location = this.value;'>
+				<option value="archives_auto" selected>Type d'archivage</option>
+				<option value="archives_auto">Auto</option>
+				<option value="archives_manual">Manuel</option>
+			</select>
+		</div>
 
 		{% include "task/task_listing.html.twig" %}
 
@@ -60,7 +58,21 @@ $('#tasksTable').DataTable({
 "targets": 3,
 "type": "date-eu"
 }
-]
+],
+
+language: {
+"sLengthMenu": "{% trans from 'messages' %}datatables.sLengthMenu     {% endtrans %}",
+"sSearch": "{% trans from 'messages' %}datatables.sSearch     {% endtrans %}",
+"sInfo": "{% trans from 'messages' %}datatables.sInfo     {% endtrans %}",
+"sInfoEmpty": "Showing 0 to 0 of 0 records",
+"sInfoFiltered": "(filtered from MAX total records)",
+"paginate": {
+"first": "{% trans from 'messages' %}datatables.first     {% endtrans %}",
+"previous": "{% trans from 'messages' %}datatables.previous     {% endtrans %}",
+"next": "{% trans from 'messages' %}datatables.next     {% endtrans %}",
+"last": "{% trans from 'messages' %}datatables.last     {% endtrans %}"
+}
+}
 });
 });
 	</script>

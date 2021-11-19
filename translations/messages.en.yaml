@@ -1,0 +1,35 @@
+general:
+  name: Name
+  description: Description
+  due_date: Due Date
+  category: Tag
+  title_list_task: List of tasks
+  button:
+    success: Send into the shadows
+    cancel: Cancel
+    update: Update
+    delete: Delete
+    archive: Archive
+    back: Back
+    add_task: Add new task
+    go_to_archive: See archives
+  flashes:
+    success: 
+      update: The modification has been correctly completed.
+      delete: The task has been correctly deleted.
+      archivage: The task has been correctly archived.
+
+    warning:
+
+    primary:
+
+  select:
+
+datatables:
+  sLengthMenu: Show _MENU_ entries per pages
+  sSearch: Search
+  sInfo: Showing from _START_ to _END_ of _TOTAL_ records
+  previous: Previous
+  next: Next
+
+

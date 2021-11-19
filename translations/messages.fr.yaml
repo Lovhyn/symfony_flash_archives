@@ -1,0 +1,37 @@
+general:
+  name: Nom
+  description: Description
+  due_date: Date Effective
+  category: Catégorie
+  title_list_task: Liste des tâches
+  button:
+    success: Enregistrer de façon ténébreuse
+    cancel: Annuler
+    update: Modifier
+    delete: Supprimer
+    archive: Archiver
+    back: Retour
+    add_task: Ajouter une tâche ténébreuse
+    go_to_archive: Voir les archives
+
+    flashes:
+      success: 
+        update: The modification has been correctly completed.
+        delete: The task has been correctly deleted.
+        archivage: The task has been correctly archived.
+
+      warning:
+
+      primary:
+
+    select:
+
+
+
+
+datatables:
+  sLengthMenu: Affichage des _MENU_ entrées par pages
+  sSearch: Rechercher
+  sInfo: Affichage de _START_ à _END_ sur _TOTAL_
+  previous: Précédent
+  next: Suivant

@@ -95,8 +95,8 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash(
-                'text-primary',
-                'La modification s\'est bien effectuée !'
+                'primary',
+                'Votre action s\'est bien effectuée, félicitations !'
             );
 
             //  Facultatif car se fait automatiquement
