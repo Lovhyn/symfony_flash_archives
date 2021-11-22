@@ -18,20 +18,23 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div>
-			<button>
-				<a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ '_locale': 'en' })) }}">English
-				</a>
-			</button>
-			<button>
-				<a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ '_locale': 'fr' })) }}">Français
-				</a>
-			</button>
+		<div class="d-flex flex-row justify-content-end">
+			<a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ '_locale': 'en' })) }}">| En |
+			</a>
+			<a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ '_locale': 'fr' })) }}">
+				| Fr |
+			</a>
 		</div>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			<p>Vous êtes connecté en tant que :
+			<div class="d-flex justify-content-end">
+				<button class="btn btn-danger mt-2 mb-2">
+					<a href="{{ path('app_logout') }}">
+						Logout</a>
+				</button>
+			</div>
+			<p class="d-flex justify-content-end mb-5">Vous êtes connecté en tant que :
 				{{ app.user.email }}</p>
-			<a href="{{ path('app_logout') }}">Logout</a>
+
 		{% endif %}
 		{% block body %}{% endblock %}
 

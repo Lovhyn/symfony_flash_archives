@@ -2,18 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Archives;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Tasks;
 use App\Form\TaskType;
+use App\Entity\Archives;
+use PhpParser\Node\Stmt\Nop;
+use JetBrains\PhpStorm\NoReturn;
+use Doctrine\ORM\EntityRepository;
 use App\Repository\TasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use JetBrains\PhpStorm\NoReturn;
-use PhpParser\Node\Stmt\Nop;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends AbstractController
 {
@@ -188,5 +190,36 @@ class TaskController extends AbstractController
         }
 
         return $this->index($slug);
+    }
+
+    /**
+     * @Route("/task/listing/download", name="task_download")
+     */
+
+
+    public function downloadPdf()
+    {
+
+        $tasks = $this->repository->findAll();
+        //  Gestion des options.
+        $pdfOptions = new Options;
+        $pdfOptions->set('defaultFont', 'Arial');
+        //  $pdfOptions->setIsRemoteEnabled(true);
+
+        //  Instanciation pdf.
+        $domPdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('pdf/pdfdownload.html.twig', [
+            'tasks' => $tasks,
+        ]);
+
+        $domPdf->load_html($html);
+        $domPdf->set_paper('A4', 'landscape');
+        $domPdf->render();
+
+        $fichier = 'Raccoons city';
+        $domPdf->stream($fichier, [
+            'Attachement' => true
+        ]);
+        return new Response();
     }
 }

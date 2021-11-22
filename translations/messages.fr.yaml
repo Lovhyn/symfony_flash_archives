@@ -13,6 +13,7 @@ general:
     back: Retour
     add_task: Ajouter une tâche ténébreuse
     go_to_archive: Voir les archives
+    download: Télécharger
 
     flashes:
       success: 
@@ -35,3 +36,4 @@ datatables:
   sInfo: Affichage de _START_ à _END_ sur _TOTAL_
   previous: Précédent
   next: Suivant
+

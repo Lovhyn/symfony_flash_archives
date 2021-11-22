@@ -13,6 +13,7 @@ general:
     back: Back
     add_task: Add new task
     go_to_archive: See archives
+    download: download
   flashes:
     success: 
       update: The modification has been correctly completed.
@@ -31,5 +32,8 @@ datatables:
   sInfo: Showing from _START_ to _END_ of _TOTAL_ records
   previous: Previous
   next: Next
+
+
+
 
 

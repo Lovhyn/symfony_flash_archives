@@ -2,3 +2,4 @@
 .table-striped > tbody > tr:nth-of-type(odd) > * {
   color: black !important;
 }
+
