@@ -67,7 +67,9 @@ class AppFixtures extends Fixture
             //  Hachage mot de passe avec les paramètres de sécurité du $user 
             //  (VOIR DANS /config/packages/security.yaml)
             $hash = $this->encoder->hashPassword($user, "password");
-            $user->setPassword($hash);
+            $user->setPassword($hash)
+                ->setIsPrefered(0);
+
 
             //  Si le premier utilisateur créé on lui donne le rôle d'admin.
             if ($i === 0) {

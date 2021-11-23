@@ -35,6 +35,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPrefered;
+
+
+    public function __construct(Bool $isPrefered = false)
+    {
+        $this->setIsPrefered($isPrefered);
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,5 +134,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getIsPrefered(): ?bool
+    {
+        return $this->isPrefered;
+    }
+
+    public function setIsPrefered(bool $isPrefered): self
+    {
+        $this->isPrefered = $isPrefered;
+
+        return $this;
     }
 }

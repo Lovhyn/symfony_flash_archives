@@ -5,17 +5,17 @@ namespace App\Controller;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Tasks;
-use App\Form\TaskType;
-use App\Entity\Archives;
-use PhpParser\Node\Stmt\Nop;
-use JetBrains\PhpStorm\NoReturn;
-use Doctrine\ORM\EntityRepository;
+use App\Repository\UserRepository;
 use App\Repository\TasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+
+
 
 class TaskController extends AbstractController
 {
@@ -29,10 +29,11 @@ class TaskController extends AbstractController
      */
     private $manager;
 
-    public function __construct(TasksRepository $repository, EntityManagerInterface $manager)
+    public function __construct(TasksRepository $repository, EntityManagerInterface $manager, UserRepository $userRepository)
     {
         $this->repository = $repository;
         $this->manager = $manager;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -40,11 +41,23 @@ class TaskController extends AbstractController
     /**
      * @Route("/task/listing", name="task_listing")
      */
-    public function index(String $slug = 'auto'): Response
+    public function index(): Response
     {
 
         //  Récupérer les infos de l'utilisateur connecté
         $user = $this->getUser();
+
+        $id = $user->getId();
+        //  Gestion du cookie (récupération).
+        /*
+        $request = Request::createFromGlobals();
+        $cookies = $request->cookies;
+        $slug = $cookies->get('monBonCookie');
+        */
+
+        $user = $this->userRepository->findBy(array('id' => $id));
+        //dd($user);
+        $slug = $user[0]->getIsPrefered();
 
 
         //  On va chercher avec doctrine le repository de nos tâches
@@ -180,22 +193,40 @@ class TaskController extends AbstractController
      */
     public function displayTable(String $slug)
     {
+        /*
+        var_dump($slug);
+        $response = new Response();
+        $expires = time() + 36000;
+        $cookie = Cookie::create("monBonCookie", $slug, $expires);
+        //dd($cookie);
+        $response->headers->setCookie($cookie);
+        $response->send();
+        */
+
+        //  Récupération des infos de l'utilisateur.
+        $user = $this->getUser();
+
+
         if ($slug != 'manual') {
             $tasks = $this->repository->findAll();
+            $user->setIsPrefered(0);
             for ($i = 0; $i < count($tasks); $i++) {
                 if ($this->checkDueAt($tasks[$i])) {
                     $this->archiveTask($tasks[$i]);
                 }
             }
+        } else {
+            $user->setIsPrefered(1);
         }
+        $this->manager->persist($user);
+        $this->manager->flush();
 
-        return $this->index($slug);
+        return $this->index();
     }
 
     /**
      * @Route("/task/listing/download", name="task_download")
      */
-
 
     public function downloadPdf()
     {
