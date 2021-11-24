@@ -15,6 +15,7 @@
 			<a href="{{ path('task_archives') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">{{ 'general.button.go_to_archive' | trans }}</a>
 			{% if is_granted('ROLE_ADMIN') %}
 				<a href="{{ path('user_listing') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">Liste utilisateurs</a>
+				<a href="{{ path('tag_index') }}" class="btn btn-dark d-flex flex-direction: row justify-content-center mb-3 w-25">Catégories</a>
 			{% endif %}
 		</div>
 
@@ -68,16 +69,16 @@ $('#tasksTable').DataTable({
 ],
 
 language: {
-"sLengthMenu": "{% trans from 'messages' %}datatables.sLengthMenu                                         {% endtrans %}",
-"sSearch": "{% trans from 'messages' %}datatables.sSearch                                         {% endtrans %}",
-"sInfo": "{% trans from 'messages' %}datatables.sInfo                                         {% endtrans %}",
+"sLengthMenu": "{% trans from 'messages' %}datatables.sLengthMenu                                                {% endtrans %}",
+"sSearch": "{% trans from 'messages' %}datatables.sSearch                                                {% endtrans %}",
+"sInfo": "{% trans from 'messages' %}datatables.sInfo                                                {% endtrans %}",
 "sInfoEmpty": "Showing 0 to 0 of 0 records",
 "sInfoFiltered": "(filtered from MAX total records)",
 "paginate": {
-"first": "{% trans from 'messages' %}datatables.first                                         {% endtrans %}",
-"previous": "{% trans from 'messages' %}datatables.previous                                         {% endtrans %}",
-"next": "{% trans from 'messages' %}datatables.next                                         {% endtrans %}",
-"last": "{% trans from 'messages' %}datatables.last                                         {% endtrans %}"
+"first": "{% trans from 'messages' %}datatables.first                                                {% endtrans %}",
+"previous": "{% trans from 'messages' %}datatables.previous                                                {% endtrans %}",
+"next": "{% trans from 'messages' %}datatables.next                                                {% endtrans %}",
+"last": "{% trans from 'messages' %}datatables.last                                                {% endtrans %}"
 }
 }
 });

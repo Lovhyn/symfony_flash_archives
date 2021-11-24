@@ -61,22 +61,15 @@ class Tasks
     private $isArchived;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="user")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $isImportant;
+    private $user;
 
     public function __construct(
-        String $name = "",
-        String $description = "",
-        String $tag = null,
-        Bool $isArchived = false,
-        Bool $isImportant = false
+        Bool $isArchived = false
     ) {
-        $this->setName($name);
-        $this->setDescription($description);
-        $this->setTag($tag);
         $this->setIsArchived($isArchived);
-        $this->setIsImportant($isImportant);
     }
 
     // *********************************************************** GETTERS & SETTERS ***************************************************************    
@@ -158,14 +151,14 @@ class Tasks
         return $this;
     }
 
-    public function getIsImportant(): ?bool
+    public function getUser(): ?User
     {
-        return $this->isImportant;
+        return $this->user;
     }
 
-    public function setIsImportant(bool $isImportant): self
+    public function setUser(?User $user): self
     {
-        $this->isImportant = $isImportant;
+        $this->user = $user;
 
         return $this;
     }

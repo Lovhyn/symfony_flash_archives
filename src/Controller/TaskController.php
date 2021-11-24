@@ -5,6 +5,7 @@ namespace App\Controller;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Tasks;
+use App\Form\TaskType;
 use App\Repository\UserRepository;
 use App\Repository\TasksRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,8 +47,33 @@ class TaskController extends AbstractController
 
         //  Récupérer les infos de l'utilisateur connecté
         $user = $this->getUser();
-
+        $role = $user->getRoles();
         $id = $user->getId();
+        $admin = "ROLE_ADMIN";
+
+
+        $user = $this->userRepository->findBy(array('id' => $id));
+        //dd($user);
+        $slug = $user[0]->getIsPrefered();
+
+        if ($slug != 'manual') {
+            $tasks = $this->repository->findAll();
+            for ($i = 0; $i < count($tasks); $i++) {
+                if ($this->checkDueAt($tasks[$i])) {
+                    $this->archiveTask($tasks[$i]);
+                }
+            }
+        }
+
+        if (in_array($admin, $role)) {
+            $tasks = $this->repository->findBy(array('isArchived' => '0'));
+        } else {
+            $tasks = $this->repository->findBy(array(
+                'isArchived' => '0',
+                'user' => $id
+            ));
+        }
+
         //  Gestion du cookie (récupération).
         /*
         $request = Request::createFromGlobals();
@@ -55,15 +81,13 @@ class TaskController extends AbstractController
         $slug = $cookies->get('monBonCookie');
         */
 
-        $user = $this->userRepository->findBy(array('id' => $id));
-        //dd($user);
-        $slug = $user[0]->getIsPrefered();
+
 
 
         //  On va chercher avec doctrine le repository de nos tâches
         //  $repository = $this->getDoctrine()->getRepository(Tasks::class);
         //  Danc ce repository, nous récupérons toutes les entrées
-        $tasks = $this->repository->findBy(array('isArchived' => '0'));
+
         //  Affichage des données dans le var-dumper
 
         return $this->render('task/index.html.twig', [
@@ -80,12 +104,22 @@ class TaskController extends AbstractController
 
         //  Récupérer les infos de l'utilisateur connecté
         $user = $this->getUser();
+        $role = $user->getRoles();
+        $id = $user->getId();
+        $admin = "ROLE_ADMIN";
 
 
         //  On va chercher avec doctrine le repository de nos tâches
         //  $repository = $this->getDoctrine()->getRepository(Tasks::class);
         //  Danc ce repository, nous récupérons toutes les entrées
-        $tasks = $this->repository->findBy(array('isArchived' => '1'));
+        if (in_array($admin, $role)) {
+            $tasks = $this->repository->findBy(array('isArchived' => '1'));
+        } else {
+            $tasks = $this->repository->findBy(array(
+                'isArchived' => '1',
+                'user' => $id
+            ));
+        }
         //  Affichage des données dans le var-dumper
 
         return $this->render('task/archives.html.twig', [
@@ -104,6 +138,9 @@ class TaskController extends AbstractController
             //  Nouvel objet Tasks
             $task = new Tasks;
             $task->setCreatedAt(new \DateTime());
+
+            $user = $this->getUser();
+            $task->setUser($user);
         }
         $form  = $this->createForm(TaskType::class, $task, []);
         $form->handleRequest($request);

@@ -1,0 +1,30 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}
+				ERROR 404
+			{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle`
+																																																																											and uncomment the following Encore helpers to start using Symfony UX #}
+		<link rel="stylesheet" href="https://bootswatch.com/5/journal/bootstrap.min.css">
+
+		{% block stylesheets %}
+			{#{{ encore_entry_link_tags('app') }}#}
+		{% endblock %}
+
+	</head>
+	<body>
+		{% block body %}
+			<h1>{% trans from 'messages' %}general.error404Titre{% endtrans %}</h1>
+
+			<p>
+				{% trans from 'messages' %}general.requestpage2{% endtrans %}
+				<a href="{{ path('app_login') }}">{% trans from 'messages' %}general.backhomepage{% endtrans %}</a>.
+			</p>
+		{% endblock %}
+	</body>
+</html>

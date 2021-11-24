@@ -1,4 +1,11 @@
 general:
+  backhomepage: Retour à la page d'accueil
+  requestpage: Vous n'avez pas les accès nécessaires pour accéder à cette page essayer une autre URL ou
+  error403Titre: Accès Non Autorisé
+
+  requestpage2: Impossible d'accéder à la page demandée. Veuillez vérifier l'URL ou
+  error404Titre: Page non trouvée
+
   name: Nom
   description: Description
   due_date: Date Effective
@@ -16,7 +23,7 @@ general:
     download: Télécharger
 
     flashes:
-      success: 
+      success:
         update: The modification has been correctly completed.
         delete: The task has been correctly deleted.
         archivage: The task has been correctly archived.
@@ -27,13 +34,9 @@ general:
 
     select:
 
-
-
-
 datatables:
   sLengthMenu: Affichage des _MENU_ entrées par pages
   sSearch: Rechercher
   sInfo: Affichage de _START_ à _END_ sur _TOTAL_
   previous: Précédent
   next: Suivant
-

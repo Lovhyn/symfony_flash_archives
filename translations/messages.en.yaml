@@ -1,4 +1,11 @@
 general:
+  backhomepage: Back to the Home Page
+  requestpage: The requested page couldn't be located. Checkout for any URL misspelling or
+  error403Titre: Access Denied
+
+  requestpage2: The requested page couldn't be located. Checkout for any URL misspelling or
+  error404Titre: Page not found
+
   name: Name
   description: Description
   due_date: Due Date
@@ -15,7 +22,7 @@ general:
     go_to_archive: See archives
     download: download
   flashes:
-    success: 
+    success:
       update: The modification has been correctly completed.
       delete: The task has been correctly deleted.
       archivage: The task has been correctly archived.
@@ -32,8 +39,3 @@ datatables:
   sInfo: Showing from _START_ to _END_ of _TOTAL_ records
   previous: Previous
   next: Next
-
-
-
-
-
