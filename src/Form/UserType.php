@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -55,10 +56,24 @@ class UserType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'error_bubbling' => true,
-                'invalid_message' => '/!\ Vous devez saisir deux fois le même mot de passe.',
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'invalid_message' => '/!\ FO SESIR 2 FOI LE MEM',
+                'first_options' => ['label' => 'Password (doit contenir au
+                
+                moins 8 caractères)'],
 
+                'second_options' => ['label' => 'Repeat Password'],
+                'constraints' => [
+                    new Regex(
+                        [
+                            'pattern' => '/^[A-Za-z0-9]\w{8,}$/',
+                            'match' => true,
+                            'message' => 'Mot de passe trop court (min 8
+                
+                caractères)'
+
+                        ]
+                    )
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
