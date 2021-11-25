@@ -31,7 +31,7 @@
 							<td>{{ user.email }}</td>
 							<td>{{ user.roles |join(', ') }}</td>
 							<td>
-								<a href={{ "path('user_update', {'id': user.id})" }} class="btn btn-success">Update</a>
+								<a href="{{ path('user_update', {'id': user.id}) }}" class="btn btn-success">Update</a>
 							</td>
 							<td>
 								<a href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-danger">Delete</a>

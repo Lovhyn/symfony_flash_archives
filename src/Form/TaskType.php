@@ -5,6 +5,7 @@ namespace App\Form;
 use Bartender;
 use App\Entity\Tag;
 use App\Entity\Tasks;
+use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityRepository;
 use PhpParser\Node\Expr\Cast\Bool_;
 use Doctrine\DBAL\Types\BooleanType;
@@ -27,9 +28,16 @@ class TaskType extends AbstractType
      */
     private $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    /**
+     * @var StatusRepository
+     */
+    private $repository;
+
+
+    public function __construct(TranslatorInterface $translator, StatusRepository $repository)
     {
         $this->translator = $translator;
+        $this->repository = $repository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -37,6 +45,7 @@ class TaskType extends AbstractType
 
         $bartender = new Bartender();
         $filteredBeerListNameName = $bartender->filterBeerList();
+        $listStatus = $this->repository->findAll();
 
         $builder
             ->add('name', ChoiceType::class, [
@@ -56,6 +65,16 @@ class TaskType extends AbstractType
                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                 },
                 'choice_label' => 'name'
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    $this->translator->trans("general.status.1") => $this->repository->findAll()[3],
+                    $this->translator->trans("general.status.2") => $this->repository->findAll()[4],
+                    $this->translator->trans("general.status.3") => $this->repository->findAll()[5]
+                ],
+                'label' => $this->translator->trans("general.status.title"),
+                'expanded' => false,
+                'multiple' => false
             ])
             ->add('save', SubmitType::class, [
                 'label' => $this->translator->trans('general.button.success'),

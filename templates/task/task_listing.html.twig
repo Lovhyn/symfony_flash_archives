@@ -6,6 +6,7 @@
 		<th>{% trans from 'messages' %}general.description{% endtrans %}</th>
 		<th>{% trans from 'messages' %}general.due_date{% endtrans %}</th>
 		<th>{% trans from 'messages' %}general.category{% endtrans %}</th>
+		<th>{{ 'general.status.title' | trans }}</th>
 		<th></th>
 		<th></th>
 		{% if slug == 'manual' %}
@@ -21,21 +22,39 @@
 					<td>{{ task.description }}</td>
 					<td>{{ task.dueAt | date('d/m/Y') }}</td>
 					<td>{{ task.tag.name }}</td>
-					<td>
-						<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-primary">{{ 'general.button.update' | trans }}</a>
-					</td>
-					<td>
-						<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">{{ 'general.button.delete' | trans }}</a>
-					</td>
 
-					{% if slug == 'manual' %}
-						<td>
-							<a href="{{ path('task_archive', {'id': task.id}) }}" class=" btn btn-info">{{ 'general.button.archive' | trans }}</a>
-						</td>
-					{% endif %}
+					{% if task.status.label == 1 %}
+						<td class="todo">
+						{% else %}
+							{% if task.status.label == 2 %}
+								<td class="wip">
+								{% else %}
+									{% if task.status.label == 3 %}
+										<td class="done">
+										{% endif %}
+									{% endif %}
+								{% endif %}
 
-				</tr>
-			{% endfor %}
-		{% endif %}
+								{{ ('general.status.' ~ task.status.label) | trans}}</td>
+
+
+							<td>
+								<a href="{{ path('task_update', {'id': task.id}) }}" class=" btn btn-primary">{{ 'general.button.update' | trans }}</a>
+							</td>
+							<td>
+								<a href="{{ path('task_delete', {'id': task.id}) }}" class=" btn btn-warning">{{ 'general.button.delete' | trans }}</a>
+							</td>
+
+							{% if slug == 'manual' %}
+								<td>
+									<a href="{{ path('task_archive', {'id': task.id}) }}" class=" btn btn-info">{{ 'general.button.archive' | trans }}</a>
+								</td>
+							{% endif %}
+
+
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
 	</tbody>
-</table>

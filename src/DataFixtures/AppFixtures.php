@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Status;
 use Faker\Factory;
 use App\Entity\Tag;
 use App\Entity\User;
@@ -61,10 +62,18 @@ class AppFixtures extends Fixture
             //  On fait persister les données.
             $manager->persist($tag);
         }
+
+        // Création des status
+        for ($s = 0; $s < 3; $s++) {
+            $status = new Status;
+            $status->setLabel($s + 1);
+            $manager->persist($status);
+        }
         //  On push les données dans la base.
         $manager->flush();
         //  Récupération des catégories créées.
         $tags = $manager->getRepository(Tag::class)->findAll();
+        $listStatus = $manager->getRepository(Status::class)->findAll();
 
 
         $listUsers = $manager->getRepository(User::class)->findAll();
@@ -80,7 +89,8 @@ class AppFixtures extends Fixture
                 ->setDueAt($faker->dateTimeBetween('now', '6 months'))
                 ->setTag($faker->randomElement($tags))
                 ->setIsArchived(0)
-                ->setUser($faker->randomElement($listUsers));
+                ->setUser($faker->randomElement($listUsers))
+                ->setStatus($faker->randomElement($listStatus));
             //  On fait persister les données
             $manager->persist($task);
         }

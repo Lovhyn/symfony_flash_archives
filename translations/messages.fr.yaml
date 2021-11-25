@@ -6,6 +6,12 @@ general:
   requestpage2: Impossible d'accéder à la page demandée. Veuillez vérifier l'URL ou
   error404Titre: Page non trouvée
 
+  status:
+    title: Statut
+    1: À faire
+    2: En cours d'exécution
+    3: Terminée
+
   name: Nom
   description: Description
   due_date: Date Effective

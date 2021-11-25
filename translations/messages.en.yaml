@@ -6,6 +6,12 @@ general:
   requestpage2: The requested page couldn't be located. Checkout for any URL misspelling or
   error404Titre: Page not found
 
+  status:
+    title: Status
+    1: To do
+    2: Work in progress
+    3: Done
+
   name: Name
   description: Description
   due_date: Due Date

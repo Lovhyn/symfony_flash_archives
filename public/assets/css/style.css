@@ -3,3 +3,14 @@
   color: black !important;
 }
 
+.done {
+  background-color: rgb(203, 255, 203) !important;
+}
+
+.todo {
+  background-color: rgb(255, 209, 255) !important;
+}
+
+.wip {
+  background-color: rgb(194, 222, 255) !important;
+}
